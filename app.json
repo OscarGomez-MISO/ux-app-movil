@@ -1,0 +1,24 @@
+{
+  "expo": {
+    "name": "UX Alarma",
+    "slug": "ux-app-movil",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "scheme": "uxalarma",
+    "plugins": ["expo-router"],
+    "experiments": {
+      "typedRoutes": true
+    },
+    "android": {
+      "package": "com.uxalarma.app"
+    },
+    "ios": {
+      "bundleIdentifier": "com.uxalarma.app",
+      "supportsTablet": true
+    },
+    "web": {
+      "bundler": "metro"
+    }
+  }
+}
