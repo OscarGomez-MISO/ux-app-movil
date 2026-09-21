@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View } from 'react-native';
 
 import { Screen } from '@/src/components/Screen';
-import { colors, spacing } from '@/src/theme';
+import { colors, sp, type, versales } from '@/src/theme';
 
 export default function HomeScreen() {
   return (
@@ -21,21 +21,19 @@ const styles = StyleSheet.create({
   content: {
     flex: 1,
     justifyContent: 'center',
-    gap: spacing.md,
+    gap: sp[4],
   },
   eyebrow: {
+    ...type.labelSmall,
+    ...versales,
     color: colors.primary,
-    fontSize: 13,
-    fontWeight: '700',
   },
   title: {
-    color: colors.text,
-    fontSize: 36,
-    fontWeight: '700',
+    ...type.displaySmall,
+    color: colors.onSurface,
   },
   description: {
-    color: colors.textMuted,
-    fontSize: 17,
-    lineHeight: 25,
+    ...type.bodyLarge,
+    color: colors.onSurfaceVariant,
   },
 });

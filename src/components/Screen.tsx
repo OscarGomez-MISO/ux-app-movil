@@ -2,7 +2,7 @@ import type { PropsWithChildren } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { colors, spacing } from '@/src/theme';
+import { colors, sp } from '@/src/theme';
 
 export function Screen({ children }: PropsWithChildren) {
   return (
@@ -15,11 +15,12 @@ export function Screen({ children }: PropsWithChildren) {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: colors.background,
+    backgroundColor: colors.surface,
   },
   container: {
     flex: 1,
-    paddingHorizontal: spacing.lg,
-    paddingVertical: spacing.md,
+    // margen lateral del marco: § 3.3
+    paddingHorizontal: sp[4],
+    paddingVertical: sp[4],
   },
 });

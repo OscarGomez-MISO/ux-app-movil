@@ -1,19 +1,8 @@
-export const colors = {
-  background: '#FFFFFF',
-  surface: '#F5F6F8',
-  primary: '#2762E9',
-  text: '#182230',
-  textMuted: '#667085',
-  border: '#D0D5DD',
-  success: '#067647',
-  warning: '#B54708',
-  danger: '#B42318',
-} as const;
+// Punto de entrada del Design System.
+// Los tres archivos que reexporta vienen del pack y NO se editan: colors.js,
+// type.js y spacing.js son idénticos a los del repositorio web
+// (src/styles/tokens.css, type.css y grid.css).
 
-export const spacing = {
-  xs: 4,
-  sm: 8,
-  md: 16,
-  lg: 24,
-  xl: 32,
-} as const;
+export { colors, scrim32 } from './colors';
+export { type, versales } from './type';
+export { sp, radius, frame } from './spacing';
