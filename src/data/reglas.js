@@ -16,6 +16,8 @@ export const resumen = (disparador, lugar = 'Casa') =>
         desc:   'Resumen calculado desde pasos anteriores.' };
 
 export const opciones = {
+  repeticionLabel: 'Repetición',
+  insistenciaLabel: 'Insistencia',
   repeticion:  ['Solo una vez', 'Todos los días', 'Cada 6 horas', 'Personalizada'],
   insistencia: ['Normal', 'Insistente', 'Crítica'],
 };
