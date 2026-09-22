@@ -12,6 +12,8 @@ type TopAppBarProps = {
   /** Debajo del título, separación 2. */
   subtitulo?: string;
   onBack?: () => void;
+  /** Primer paso del flujo: sin flecha y con los iconos de buscar y cuenta. */
+  sinAtras?: boolean;
 };
 
 /**
@@ -24,12 +26,14 @@ export default function TopAppBar({
   titulo,
   subtitulo,
   onBack,
+  sinAtras,
 }: TopAppBarProps) {
-  const conAtras = variante !== 'titulo';
-  // Las tres variantes centran el bloque de título, como la maqueta. La § 4.2
-  // describe `titulo` alineado a la izquierda y con los iconos de buscar y
-  // cuenta a la derecha; manda la maqueta.
-  const centrado = true;
+  const conAtras = variante !== 'titulo' && !sinAtras;
+  // Según las maquetas: `titulo` centra y no lleva iconos (M08, M09, M10);
+  // `paso` y `atras` alinean a la izquierda y llevan los dos iconos cuando no
+  // hay flecha (M02). La § 4.2 describe otro reparto; manda la maqueta.
+  const centrado = variante === 'titulo';
+  const conIconos = variante !== 'titulo' && !conAtras;
 
   return (
     <View
@@ -55,8 +59,17 @@ export default function TopAppBar({
         )}
       </View>
 
-      {/* Sólo cuando hay flecha: equilibra su ancho para que el centrado sea real */}
-      {conAtras && <View style={estilos.atras} />}
+      {conIconos && (
+        <View
+          style={estilos.acciones}
+          accessibilityElementsHidden
+          importantForAccessibility="no-hide-descendants"
+        >
+          {/* Inertes: buscador y cuenta no entran en las diez pantallas */}
+          <Icon nombre="search" size={24} color={colors.onSurface} />
+          <Icon nombre="account_circle" size={24} color={colors.onSurface} />
+        </View>
+      )}
     </View>
   );
 }
