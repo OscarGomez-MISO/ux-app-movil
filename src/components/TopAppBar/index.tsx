@@ -79,7 +79,7 @@ const estilos = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     height: frame.appBar,
-    paddingHorizontal: sp[4],
+    paddingHorizontal: sp[6],
     backgroundColor: colors.surfaceContainerLowest,
   },
   conBorde: {

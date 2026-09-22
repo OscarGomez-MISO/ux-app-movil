@@ -13,9 +13,9 @@ export const saludo = {
 export const tituloProximas = 'Próximas alertas';
 
 export const proximas = [
-  { icono: 'payments',    titulo: 'Pagar administración', ctx: 'Hoy 6:00 p. m. · Finanzas' },
-  { icono: 'medication',  titulo: 'Tomar medicamento',    ctx: 'Hoy 8:00 a. m. · Salud' },
-  { icono: 'work',        titulo: 'Reunión equipo',       ctx: 'Mañana 10:00 a. m. · Trabajo' },
+  { icono: 'priority_high', titulo: 'Pagar administración', ctx: 'Hoy 6:00 p. m. · Finanzas' },
+  { icono: 'notifications', titulo: 'Tomar medicamento',    ctx: 'Hoy 8:00 a. m. · Salud' },
+  { icono: 'notifications', titulo: 'Reunión equipo',       ctx: 'Mañana 10:00 a. m. · Trabajo' },
   { icono: 'location_on', titulo: 'Recoger paquete',      ctx: 'Al llegar a Casa · Personal' },
 ];
 

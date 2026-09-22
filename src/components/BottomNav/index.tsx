@@ -58,7 +58,7 @@ const estilos = StyleSheet.create({
     flexDirection: 'row',
     height: frame.bottomNav,
     paddingTop: sp[3],
-    backgroundColor: colors.surfaceContainerLowest,
+    backgroundColor: colors.surfaceContainer,
     borderTopWidth: 1,
     borderTopColor: colors.outlineVariant,
   },
