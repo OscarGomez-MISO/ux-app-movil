@@ -5,11 +5,11 @@
 // CM-01. La última opción se llamaba «Recordar después» y nadie supo qué hacía.
 // Se renombró y cada disparador lleva descripción. No se tocan.
 export const disparadores = [
-  { valor: 'Hora exacta',          desc: 'Suena a una hora que tú eliges' },
-  { valor: 'Al llegar a un lugar', desc: 'Suena cuando entras o sales de un sitio' },
-  { valor: 'Antes de un evento',   desc: 'Se apoya en tu calendario conectado' },
-  { valor: 'Cada cierto tiempo',   desc: 'Se repite en intervalos que tú defines' },
-  { valor: 'Sin momento fijo',     desc: 'Queda en pendientes hasta que la atiendas' },
+  { valor: 'Hora exacta',          desc: 'Suena a una hora que tú eliges',             icono: 'schedule' },
+  { valor: 'Al llegar a un lugar', desc: 'Suena cuando entras o sales de un sitio',    icono: 'location_on' },
+  { valor: 'Antes de un evento',   desc: 'Se apoya en tu calendario conectado',        icono: 'event_available' },
+  { valor: 'Cada cierto tiempo',   desc: 'Se repite en intervalos que tú defines',      icono: 'timer' },
+  { valor: 'Sin momento fijo',     desc: 'Queda en pendientes hasta que la atiendas',  icono: 'help' },
 ];
 
 // CM-03. La condición de la bifurcación de M03, escrita en un solo sitio.
