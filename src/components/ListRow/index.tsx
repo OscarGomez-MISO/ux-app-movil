@@ -17,6 +17,8 @@ type ListRowProps = {
   inerte?: boolean;
   /** Título en onSurfaceVariant, para la fila ya completada de M08. */
   atenuado?: boolean;
+  /** `superficie`: fondo gris y sin borde, como las filas de canal de M06. */
+  variante?: 'tarjeta' | 'superficie';
 };
 
 /** Fila de lista · § 4.12. */
@@ -29,6 +31,7 @@ export default function ListRow({
   compacta,
   inerte,
   atenuado,
+  variante = 'tarjeta',
 }: ListRowProps) {
   return (
     <Pressable
@@ -37,6 +40,7 @@ export default function ListRow({
       accessibilityRole={onPress && !inerte ? 'button' : undefined}
       style={({ pressed }) => [
         estilos.fila,
+        variante === 'superficie' && estilos.superficie,
         compacta && estilos.compacta,
         inerte && estilos.inerte,
         pressed && !inerte && estilos.pulsada,
@@ -76,6 +80,10 @@ const estilos = StyleSheet.create({
     borderWidth: 1,
     borderColor: colors.outlineVariant,
     borderRadius: radius.md,
+  },
+  superficie: {
+    backgroundColor: colors.surfaceContainerLow,
+    borderColor: 'transparent',
   },
   compacta: {
     height: frame.filaAjuste,

@@ -24,7 +24,14 @@ export default function RootLayout() {
           contentStyle: { backgroundColor: colors.surface },
           headerShown: false,
         }}
-      />
+      >
+        {/* CM-06. Una alarma que suena no se descarta deslizando: la entrada
+            es un desvanecido y el gesto de volver queda desactivado. */}
+        <Stack.Screen
+          name="m07-alerta-lanzada"
+          options={{ animation: 'fade', gestureEnabled: false }}
+        />
+      </Stack>
     </>
   );
 }

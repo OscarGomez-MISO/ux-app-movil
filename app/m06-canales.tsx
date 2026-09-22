@@ -47,6 +47,7 @@ export default function M06Canales() {
           {lista.map((canal, indice) => (
             <ListRow
               key={canal.titulo}
+              variante="superficie"
               icono={canal.icono}
               titulo={canal.titulo}
               ctx={canal.desc}
@@ -113,9 +114,9 @@ const estilos = StyleSheet.create({
   canales: {
     gap: sp[2],
   },
+  /* Los dos secundarios van de ancho completo, uno sobre otro */
   secundarios: {
     gap: sp[2],
-    alignItems: 'flex-start',
   },
   tintaError: {
     color: colors.onErrorContainer,
