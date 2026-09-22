@@ -1,4 +1,4 @@
-import { Pressable, StyleSheet, Text, type ViewStyle } from 'react-native';
+import { Pressable, StyleSheet, Text, View, type ViewStyle } from 'react-native';
 
 import Icon, { type IconName } from '@/src/components/Icon';
 import { colors, frame, radius, sp, type } from '@/src/theme';
@@ -44,21 +44,31 @@ export default function ActionCapsule({
         pressed && estilos.pulsada,
       ]}
     >
-      <Icon nombre={icono} size={20} color={tinta} />
-      <Text style={[type.labelLarge, { color: tinta }]}>{children}</Text>
+      {/* El icono queda anclado a la izquierda y el texto centrado en la cápsula */}
+      <View style={estilos.icono}>
+        <Icon nombre={icono} size={20} color={tinta} />
+      </View>
+      <Text style={[type.labelLarge, estilos.texto, { color: tinta }]}>
+        {children}
+      </Text>
     </Pressable>
   );
 }
 
 const estilos = StyleSheet.create({
   capsula: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: sp[3],
+    justifyContent: 'center',
     alignSelf: 'stretch',
     height: frame.boton,
     paddingHorizontal: sp[5],
     borderRadius: radius.xxl - 4, // 24
+  },
+  icono: {
+    position: 'absolute',
+    left: sp[5],
+  },
+  texto: {
+    textAlign: 'center',
   },
   destacada: {
     height: frame.botonPrincipal,
