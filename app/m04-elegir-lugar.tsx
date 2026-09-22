@@ -21,6 +21,7 @@ import {
 } from '@/src/data/lugares';
 import { subtituloPaso, tituloFlujo } from '@/src/data/textos';
 import { rutaConParametros } from '@/src/navigation/rutas';
+import useBottomNavHeight from '@/src/hooks/useBottomNavHeight';
 import { colors, frame, radius, sp, type } from '@/src/theme';
 
 type Lugar = {
@@ -38,6 +39,7 @@ export default function M04ElegirLugar() {
   const [busqueda, setBusqueda] = useState('');
   const [lugar, setLugar] = useState(opciones[0].valor);
   const [etiqueta, setEtiqueta] = useState(etiquetaMapa);
+  const altoBarra = useBottomNavHeight();
 
   const elegirLugar = (opcion: Lugar) => {
     if (opcion.inerte) return;
@@ -60,7 +62,10 @@ export default function M04ElegirLugar() {
       <ScrollView
         keyboardShouldPersistTaps="handled"
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={estilos.contenido}
+        contentContainerStyle={[
+          estilos.contenido,
+          { paddingBottom: altoBarra + sp[6] },
+        ]}
       >
         <Text style={[type.titleLarge, estilos.titulo]}>{titulo}</Text>
 
@@ -155,7 +160,6 @@ const estilos = StyleSheet.create({
   contenido: {
     paddingHorizontal: sp[6],
     paddingTop: sp[5],
-    paddingBottom: frame.bottomNav + sp[6],
   },
   titulo: {
     color: colors.onSurface,

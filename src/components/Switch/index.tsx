@@ -10,6 +10,8 @@ type SwitchProps = {
   label?: string;
   /** `check` conserva la interacción con el aspecto compacto de M05. */
   variante?: 'switch' | 'check';
+  /** Variante de 44 x 24 usada en las filas de canales de M06. */
+  compacto?: boolean;
 };
 
 /**
@@ -21,6 +23,7 @@ export default function Switch({
   onChange,
   label,
   variante = 'switch',
+  compacto,
 }: SwitchProps) {
   const recorrido = useRef(new Animated.Value(on ? 1 : 0)).current;
 
@@ -65,11 +68,16 @@ export default function Switch({
       accessibilityState={{ checked: on }}
       accessibilityLabel={label}
       hitSlop={sp[2]}
-      style={[estilos.pista, on ? estilos.encendido : estilos.apagado]}
+      style={[
+        estilos.pista,
+        compacto && estilos.pistaCompacta,
+        on ? estilos.encendido : estilos.apagado,
+      ]}
     >
       <Animated.View
         style={[
           estilos.pulgar,
+          compacto && estilos.pulgarCompacto,
           { backgroundColor: on ? colors.onPrimary : colors.outline },
           { transform: [{ translateX: desplazamiento }] },
         ]}
@@ -99,6 +107,15 @@ const estilos = StyleSheet.create({
     width: 24,
     height: 24,
     borderRadius: 12,
+  },
+  pistaCompacta: {
+    width: 44,
+    height: 24,
+  },
+  pulgarCompacto: {
+    width: 16,
+    height: 16,
+    borderRadius: 8,
   },
   check: {
     width: 32,

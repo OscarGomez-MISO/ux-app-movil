@@ -7,13 +7,14 @@ import BottomNav from '@/src/components/BottomNav';
 import Button from '@/src/components/Button';
 import Card from '@/src/components/Card';
 import ListRow from '@/src/components/ListRow';
+import StepBar from '@/src/components/StepBar';
 import Switch from '@/src/components/Switch';
 import TopAppBar from '@/src/components/TopAppBar';
 import { avisoSilencio, botones, canales, titulo } from '@/src/data/canales';
-import { subtituloPaso, tituloFlujo } from '@/src/data/textos';
 import type { IconName } from '@/src/components/Icon';
+import useBottomNavHeight from '@/src/hooks/useBottomNavHeight';
 import { rutas } from '@/src/navigation/rutas';
-import { colors, frame, sp, type } from '@/src/theme';
+import { colors, sp, type } from '@/src/theme';
 
 type Canal = {
   icono: IconName;
@@ -26,6 +27,7 @@ type Canal = {
 export default function M06Canales() {
   const lista = canales as Canal[];
   const [activos, setActivos] = useState(lista.map((canal) => canal.activo));
+  const altoBarra = useBottomNavHeight();
 
   const conmutar = (indice: number) =>
     setActivos((previos) =>
@@ -34,15 +36,15 @@ export default function M06Canales() {
 
   return (
     <SafeAreaView style={estilos.pantalla} edges={['top']}>
-      <TopAppBar
-        variante="paso"
-        titulo={tituloFlujo}
-        subtitulo={subtituloPaso(5)}
-      />
+      <TopAppBar variante="atras" titulo={titulo} />
+      <StepBar actual={5} total={5} />
 
-      <ScrollView contentContainerStyle={estilos.contenido}>
-        <Text style={[type.titleLarge, estilos.titulo]}>{titulo}</Text>
-
+      <ScrollView
+        contentContainerStyle={[
+          estilos.contenido,
+          { paddingBottom: altoBarra + sp[6] },
+        ]}
+      >
         <View style={estilos.canales}>
           {lista.map((canal, indice) => (
             <ListRow
@@ -56,6 +58,7 @@ export default function M06Canales() {
                   on={activos[indice]}
                   onChange={() => conmutar(indice)}
                   label={canal.titulo}
+                  compacto
                 />
               }
             />
@@ -63,11 +66,16 @@ export default function M06Canales() {
         </View>
 
         {/* CM-05. El aviso va ANTES del botón de guardar. No se mueve al pie. */}
-        <Card tipo="aviso" tono="error" icono="notifications_off">
-          <Text style={[type.titleSmall, estilos.tintaError]}>
+        <Card
+          tipo="aviso"
+          tono="pospuesta"
+          icono="notifications_off"
+          style={estilos.aviso}
+        >
+          <Text style={[type.titleSmall, estilos.tintaPospuesta]}>
             {avisoSilencio.titulo}
           </Text>
-          <Text style={[type.bodySmall, estilos.tintaError]}>
+          <Text style={[type.bodySmall, estilos.tintaPospuesta]}>
             {avisoSilencio.desc}
           </Text>
         </Card>
@@ -84,7 +92,6 @@ export default function M06Canales() {
 
         <Button
           tipo="primario"
-          ancho="completo"
           onPress={() => router.dismissTo(rutas.M01Inicio)}
         >
           {botones.guardar}
@@ -103,13 +110,8 @@ const estilos = StyleSheet.create({
   },
   contenido: {
     paddingHorizontal: sp[4],
-    // La barra inferior va en absolute: se le reserva el alto · § 3.3
-    paddingBottom: frame.bottomNav + sp[6],
-    gap: sp[6],
-  },
-  titulo: {
-    color: colors.onSurface,
-    marginTop: sp[4],
+    paddingTop: sp[4],
+    gap: sp[3],
   },
   canales: {
     gap: sp[2],
@@ -118,7 +120,10 @@ const estilos = StyleSheet.create({
   secundarios: {
     gap: sp[2],
   },
-  tintaError: {
-    color: colors.onErrorContainer,
+  aviso: {
+    minHeight: 100,
+  },
+  tintaPospuesta: {
+    color: colors.onPostponedContainer,
   },
 });

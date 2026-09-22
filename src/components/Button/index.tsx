@@ -50,7 +50,7 @@ export default function Button({
         estilos.base,
         tono[tipo].caja,
         principal && estilos.completo,
-        apagado && estilos.apagado,
+        disabled && estilos.apagado,
         pressed && !apagado && estilos.pulsado,
       ]}
     >

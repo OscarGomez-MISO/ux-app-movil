@@ -58,7 +58,7 @@ export default function M07AlertaLanzada() {
         <Text style={[type.labelSmall, versales, estilos.tinta, estilos.rotuloAlerta]}>
           {alertaLanzada.rotulo}
         </Text>
-        <Text style={[type.headlineSmall, estilos.tinta, estilos.titulo]}>
+        <Text style={[type.displaySmall, estilos.tinta, estilos.titulo]}>
           {alertaLanzada.titulo}
         </Text>
 

@@ -21,6 +21,7 @@ import {
 } from '@/src/data/hoy';
 import { titulos } from '@/src/data/textos';
 import { rutaDe, rutas } from '@/src/navigation/rutas';
+import useBottomNavHeight from '@/src/hooks/useBottomNavHeight';
 import { colors, frame, radius, sp, type } from '@/src/theme';
 
 type Proxima = {
@@ -33,6 +34,7 @@ type Proxima = {
 export default function M01Inicio() {
   const opciones = chips as string[];
   const [chipActivo, setChipActivo] = useState(opciones[0]);
+  const altoBarra = useBottomNavHeight();
 
   return (
     <SafeAreaView style={estilos.pantalla} edges={['top']}>
@@ -45,7 +47,10 @@ export default function M01Inicio() {
 
       <ScrollView
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={estilos.contenido}
+        contentContainerStyle={[
+          estilos.contenido,
+          { paddingBottom: altoBarra + frame.botonPrincipal + sp[8] },
+        ]}
       >
         <View style={estilos.chips}>
           {opciones.map((chip) => (
@@ -152,7 +157,6 @@ const estilos = StyleSheet.create({
     gap: sp[5],
     paddingHorizontal: sp[6],
     paddingTop: sp[4],
-    paddingBottom: frame.bottomNav + frame.botonPrincipal + sp[8],
   },
   chips: {
     flexDirection: 'row',

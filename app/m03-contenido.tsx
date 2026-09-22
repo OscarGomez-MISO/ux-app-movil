@@ -21,6 +21,7 @@ import {
 import { disparadores, LUGAR } from '@/src/data/disparadores';
 import { subtituloPaso, tituloFlujo } from '@/src/data/textos';
 import { rutaConParametros } from '@/src/navigation/rutas';
+import useBottomNavHeight from '@/src/hooks/useBottomNavHeight';
 import { colors, frame, radius, sp, type } from '@/src/theme';
 
 /** M03 · Contenido de la alerta. */
@@ -30,6 +31,7 @@ export default function M03Contenido() {
   const [tituloAlerta, setTituloAlerta] = useState(ejemplo.titulo);
   const [categoria, setCategoria] = useState(ejemplo.categoria);
   const [nota, setNota] = useState(ejemplo.nota);
+  const altoBarra = useBottomNavHeight();
 
   const continuarFlujo = () => {
     const destino = disparador === LUGAR ? 'M04ElegirLugar' : 'M05Reglas';
@@ -48,7 +50,10 @@ export default function M03Contenido() {
       <ScrollView
         keyboardShouldPersistTaps="handled"
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={estilos.contenido}
+        contentContainerStyle={[
+          estilos.contenido,
+          { paddingBottom: altoBarra + sp[6] },
+        ]}
       >
         <Text style={[type.titleLarge, estilos.titulo]}>{titulo}</Text>
 
@@ -129,7 +134,6 @@ const estilos = StyleSheet.create({
   contenido: {
     paddingHorizontal: sp[6],
     paddingTop: sp[5],
-    paddingBottom: frame.bottomNav + sp[6],
   },
   titulo: {
     color: colors.onSurface,

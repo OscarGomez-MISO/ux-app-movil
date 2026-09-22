@@ -8,7 +8,7 @@ type ChipProps = {
   onPress?: () => void;
 };
 
-/** Chip · § 4.15. No navega ni filtra: sólo cambia de estado. */
+/** Chip seleccionable · § 4.15. La pantalla decide qué cambia al pulsarlo. */
 export default function Chip({ children, activo = false, onPress }: ChipProps) {
   return (
     <Pressable

@@ -3,6 +3,7 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 import Icon from '@/src/components/Icon';
 import { colors, frame, radius, sp, type } from '@/src/theme';
+import useBottomNavHeight from '@/src/hooks/useBottomNavHeight';
 
 type FabProps = {
   children: ReactNode;
@@ -11,12 +12,18 @@ type FabProps = {
 
 /** Boton flotante extendido para iniciar el flujo de creacion. */
 export default function Fab({ children, onPress }: FabProps) {
+  const altoBarra = useBottomNavHeight();
+
   return (
     <Pressable
       onPress={onPress}
       accessibilityRole="button"
       accessibilityLabel={typeof children === 'string' ? children : undefined}
-      style={({ pressed }) => [estilos.base, pressed && estilos.pulsado]}
+      style={({ pressed }) => [
+        estilos.base,
+        { bottom: altoBarra + sp[4] },
+        pressed && estilos.pulsado,
+      ]}
     >
       <View style={estilos.contenido}>
         <Icon nombre="add" size={24} color={colors.onPrimary} />
@@ -30,7 +37,6 @@ const estilos = StyleSheet.create({
   base: {
     position: 'absolute',
     right: sp[4],
-    bottom: frame.bottomNav + sp[4],
     height: frame.botonPrincipal,
     paddingHorizontal: sp[5],
     borderRadius: radius.lg,

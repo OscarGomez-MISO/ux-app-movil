@@ -14,7 +14,8 @@ import {
   mantenimiento,
 } from '@/src/data/ajustes';
 import { titulos } from '@/src/data/textos';
-import { colors, frame, sp, type, versales } from '@/src/theme';
+import useBottomNavHeight from '@/src/hooks/useBottomNavHeight';
+import { colors, sp, type, versales } from '@/src/theme';
 
 type Conexion = {
   icono: IconName;
@@ -32,11 +33,18 @@ type Alerta = {
 
 /** M10 · Ajustes · § 6.10. */
 export default function M10Ajustes() {
+  const altoBarra = useBottomNavHeight();
+
   return (
     <SafeAreaView style={estilos.pantalla} edges={['top']}>
       <TopAppBar variante="titulo" titulo={titulos.M10} />
 
-      <ScrollView contentContainerStyle={estilos.contenido}>
+      <ScrollView
+        contentContainerStyle={[
+          estilos.contenido,
+          { paddingBottom: altoBarra + sp[6] },
+        ]}
+      >
         <Text style={[type.labelSmall, versales, estilos.rotulo]}>
           {conexiones.rotulo}
         </Text>
@@ -63,12 +71,11 @@ export default function M10Ajustes() {
         </Text>
         <View style={estilos.grupo}>
           {(alertas.filas as Alerta[]).map((fila) => (
-            // Inertes: sus pantallas de detalle no entran en las diez.
-            // El chevron se queda —está en el mockup— pero no lleva a ningún sitio.
+            // Sus pantallas de detalle no entran en las diez. El chevron se
+            // conserva porque está en el mockup, pero la fila no navega.
             <ListRow
               key={fila.titulo}
               compacta
-              inerte
               variante="superficie"
               titulo={fila.titulo}
               ctx={fila.ctx}
@@ -118,8 +125,6 @@ const estilos = StyleSheet.create({
   contenido: {
     paddingHorizontal: sp[4],
     paddingTop: sp[2],
-    // La barra inferior va en absolute: se le reserva el alto · § 3.3
-    paddingBottom: frame.bottomNav + sp[6],
     gap: sp[3],
   },
   rotulo: {

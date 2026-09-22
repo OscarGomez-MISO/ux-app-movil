@@ -22,6 +22,7 @@ import {
 } from '@/src/data/reglas';
 import { subtituloPaso, tituloFlujo } from '@/src/data/textos';
 import { rutaDe } from '@/src/navigation/rutas';
+import useBottomNavHeight from '@/src/hooks/useBottomNavHeight';
 import { colors, frame, radius, sp, type } from '@/src/theme';
 
 const opcionesDropdown = (valoresOpcion: string[]): DropdownOption[] =>
@@ -37,6 +38,7 @@ export default function M05Reglas() {
   const [requiereConfirmacion, setRequiereConfirmacion] = useState(
     confirmacion.activo,
   );
+  const altoBarra = useBottomNavHeight();
 
   return (
     <SafeAreaView style={estilos.pantalla} edges={['top']}>
@@ -50,7 +52,10 @@ export default function M05Reglas() {
       <ScrollView
         keyboardShouldPersistTaps="handled"
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={estilos.contenido}
+        contentContainerStyle={[
+          estilos.contenido,
+          { paddingBottom: altoBarra + sp[6] },
+        ]}
       >
         <Text style={[type.titleLarge, estilos.titulo]}>{titulo}</Text>
 
@@ -140,7 +145,6 @@ const estilos = StyleSheet.create({
   contenido: {
     paddingHorizontal: sp[6],
     paddingTop: sp[5],
-    paddingBottom: frame.bottomNav + sp[6],
   },
   titulo: {
     color: colors.onSurface,

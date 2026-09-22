@@ -12,7 +12,8 @@ import TopAppBar from '@/src/components/TopAppBar';
 import { detalle, listas, nota, pestanas } from '@/src/data/historial';
 import { titulos } from '@/src/data/textos';
 import { rutas } from '@/src/navigation/rutas';
-import { colors, frame, sp, type, versales } from '@/src/theme';
+import useBottomNavHeight from '@/src/hooks/useBottomNavHeight';
+import { colors, sp, type, versales } from '@/src/theme';
 
 type Registro = { icono: IconName; nombre: string; ctx: string };
 type Lista = { rotulo: string; filas: Registro[] };
@@ -26,6 +27,7 @@ export default function M09Historial() {
   const opciones = pestanas as string[];
   const [activa, setActiva] = useState(opciones[0]);
   const lista = (listas as Record<string, Lista>)[activa];
+  const altoBarra = useBottomNavHeight();
 
   return (
     <SafeAreaView style={estilos.pantalla} edges={['top']}>
@@ -35,7 +37,12 @@ export default function M09Historial() {
         <Tabs opciones={opciones} activa={activa} onChange={setActiva} />
       </View>
 
-      <ScrollView contentContainerStyle={estilos.contenido}>
+      <ScrollView
+        contentContainerStyle={[
+          estilos.contenido,
+          { paddingBottom: altoBarra + sp[6] },
+        ]}
+      >
         {/* CM-07: el contexto de las reprogramadas dice cuántas veces */}
         <Text style={[type.labelSmall, versales, estilos.rotulo]}>
           {lista.rotulo}
@@ -80,8 +87,6 @@ const estilos = StyleSheet.create({
   contenido: {
     paddingHorizontal: sp[4],
     paddingTop: sp[5],
-    // La barra inferior va en absolute: se le reserva el alto · § 3.3
-    paddingBottom: frame.bottomNav + sp[6],
   },
   rotulo: {
     color: colors.onSurfaceVariant,

@@ -15,6 +15,7 @@ import {
 } from '@/src/data/disparadores';
 import { subtituloPaso, tituloFlujo } from '@/src/data/textos';
 import { rutaConParametros } from '@/src/navigation/rutas';
+import useBottomNavHeight from '@/src/hooks/useBottomNavHeight';
 import { colors, frame, radius, sp, type } from '@/src/theme';
 
 type Disparador = {
@@ -27,6 +28,7 @@ type Disparador = {
 export default function M02TipoDeAlerta() {
   const opciones = disparadores as Disparador[];
   const [disparador, setDisparador] = useState(opciones[0].valor);
+  const altoBarra = useBottomNavHeight();
 
   const continuarFlujo = () =>
     router.navigate(
@@ -44,7 +46,10 @@ export default function M02TipoDeAlerta() {
 
       <ScrollView
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={estilos.contenido}
+        contentContainerStyle={[
+          estilos.contenido,
+          { paddingBottom: altoBarra + sp[6] },
+        ]}
       >
         <Text style={[type.titleLarge, estilos.titulo]}>{titulo}</Text>
         <Text style={[type.bodySmall, estilos.entradilla]}>{entradilla}</Text>
@@ -91,7 +96,6 @@ const estilos = StyleSheet.create({
   contenido: {
     paddingHorizontal: sp[6],
     paddingTop: sp[5],
-    paddingBottom: frame.bottomNav + sp[6],
   },
   titulo: {
     color: colors.onSurface,

@@ -19,7 +19,7 @@ type ListRowProps = {
   inerte?: boolean;
   /** Título en onSurfaceVariant, para la fila ya completada de M08. */
   atenuado?: boolean;
-  /** `superficie`: fondo gris y sin borde, como las filas de canal de M06. */
+  /** `superficie`: fondo gris, como las filas de M06, M09 y M10. */
   variante?: 'tarjeta' | 'superficie';
 };
 
@@ -103,7 +103,6 @@ const estilos = StyleSheet.create({
   },
   superficie: {
     backgroundColor: colors.surfaceContainerLow,
-    borderColor: 'transparent',
   },
   compacta: {
     height: frame.filaAjuste,

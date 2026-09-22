@@ -5,6 +5,7 @@ import Icon, { type IconName } from '@/src/components/Icon';
 import { rutaDe } from '@/src/navigation/rutas';
 import { pestanas } from '@/src/data/textos';
 import { colors, frame, radius, sp, type } from '@/src/theme';
+import useBottomNavHeight from '@/src/hooks/useBottomNavHeight';
 
 type Pestana = { id: string; icono: IconName; ruta: string };
 
@@ -15,8 +16,15 @@ type Pestana = { id: string; icono: IconName; ruta: string };
  * M07 no la lleva: cuando la alarma suena no hay navegación, hay decisión.
  */
 export default function BottomNav({ activa }: { activa: string }) {
+  const alto = useBottomNavHeight();
+
   return (
-    <View style={estilos.barra}>
+    <View
+      style={[
+        estilos.barra,
+        { height: alto, paddingBottom: alto - frame.bottomNav },
+      ]}
+    >
       {(pestanas as Pestana[]).map((pestana) => {
         const seleccionada = pestana.id === activa;
         const tinta = seleccionada

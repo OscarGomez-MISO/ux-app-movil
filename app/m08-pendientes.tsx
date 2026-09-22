@@ -13,7 +13,8 @@ import TopAppBar from '@/src/components/TopAppBar';
 import { chips, pendientes } from '@/src/data/pendientes';
 import { titulos } from '@/src/data/textos';
 import { rutas } from '@/src/navigation/rutas';
-import { colors, frame, sp } from '@/src/theme';
+import useBottomNavHeight from '@/src/hooks/useBottomNavHeight';
+import { colors, sp } from '@/src/theme';
 
 type Pendiente = {
   id: number;
@@ -21,21 +22,33 @@ type Pendiente = {
   nombre: string;
   ctx: string;
   estado: EstadoChip;
+  filtros: Filtro[];
 };
+
+type Filtro = 'Todos' | 'Hoy' | 'Esta semana' | 'Por lugar';
 
 /** M08 · Pendientes · § 6.8. */
 export default function M08Pendientes() {
-  const [chipActivo, setChipActivo] = useState(chips[0]);
+  const lista = pendientes as Pendiente[];
+  const opciones = chips as Filtro[];
+  const [chipActivo, setChipActivo] = useState<Filtro>(opciones[0]);
+  const altoBarra = useBottomNavHeight();
 
   // La completada llega ya marcada. Se pierde al navegar: no se guarda nada.
   const [marcadas, setMarcadas] = useState(
-    (pendientes as Pendiente[]).map((fila) => fila.estado === 'completada'),
+    () =>
+      Object.fromEntries(
+        lista.map((fila) => [fila.id, fila.estado === 'completada']),
+      ) as Record<number, boolean>,
   );
 
-  const marcar = (indice: number) =>
-    setMarcadas((previas) =>
-      previas.map((valor, i) => (i === indice ? !valor : valor)),
-    );
+  const filasVisibles =
+    chipActivo === 'Todos'
+      ? lista
+      : lista.filter((fila) => fila.filtros.includes(chipActivo));
+
+  const marcar = (id: number) =>
+    setMarcadas((previas) => ({ ...previas, [id]: !previas[id] }));
 
   return (
     <SafeAreaView style={estilos.pantalla} edges={['top']}>
@@ -48,7 +61,7 @@ export default function M08Pendientes() {
         contentContainerStyle={estilos.chips}
         style={estilos.chipsFila}
       >
-        {(chips as string[]).map((chip) => (
+        {opciones.map((chip) => (
           <Chip
             key={chip}
             activo={chip === chipActivo}
@@ -59,14 +72,19 @@ export default function M08Pendientes() {
         ))}
       </ScrollView>
 
-      <ScrollView contentContainerStyle={estilos.lista}>
-        {(pendientes as Pendiente[]).map((fila, indice) => (
+      <ScrollView
+        contentContainerStyle={[
+          estilos.lista,
+          { paddingBottom: altoBarra + sp[6] },
+        ]}
+      >
+        {filasVisibles.map((fila) => (
           <ListRow
             key={fila.id}
             delante={
               <Checkbox
-                checked={marcadas[indice]}
-                onChange={() => marcar(indice)}
+                checked={marcadas[fila.id]}
+                onChange={() => marcar(fila.id)}
                 accessibilityLabel={fila.nombre}
               />
             }
@@ -102,7 +120,5 @@ const estilos = StyleSheet.create({
     gap: sp[2],
     paddingHorizontal: sp[4],
     paddingTop: sp[6],
-    // La barra inferior va en absolute: se le reserva el alto · § 3.3
-    paddingBottom: frame.bottomNav + sp[6],
   },
 });

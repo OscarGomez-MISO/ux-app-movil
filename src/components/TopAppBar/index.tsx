@@ -37,7 +37,11 @@ export default function TopAppBar({
 
   return (
     <View
-      style={[estilos.barra, variante === 'titulo' && estilos.conBorde]}
+      style={[
+        estilos.barra,
+        conAtras && estilos.barraConAtras,
+        (variante === 'titulo' || conAtras) && estilos.conBorde,
+      ]}
     >
       {conAtras && (
         <Pressable
@@ -86,8 +90,11 @@ const estilos = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: colors.outlineVariant,
   },
+  barraConAtras: {
+    paddingHorizontal: sp[4],
+  },
   atras: {
-    width: 48,
+    width: 40,
     height: 48,
     alignItems: 'center',
     justifyContent: 'center',
