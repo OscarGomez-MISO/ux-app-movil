@@ -75,6 +75,9 @@ const estados: Record<
   },
 };
 
+/** La palabra fija de un estado, para cuando se muestra sin la cápsula. */
+export const palabraDe = (estado: EstadoChip) => estados[estado].palabra;
+
 /** Etiqueta de estado · § 4.16. Nunca sólo color: siempre icono y palabra. */
 export default function StatusChip({ estado }: { estado: EstadoChip }) {
   const { icono, palabra, fondo, tinta } = estados[estado];
