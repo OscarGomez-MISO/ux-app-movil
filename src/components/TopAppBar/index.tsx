@@ -26,7 +26,10 @@ export default function TopAppBar({
   onBack,
 }: TopAppBarProps) {
   const conAtras = variante !== 'titulo';
-  const centrado = variante === 'paso' || variante === 'atras';
+  // Las tres variantes centran el bloque de título, como la maqueta. La § 4.2
+  // describe `titulo` alineado a la izquierda y con los iconos de buscar y
+  // cuenta a la derecha; manda la maqueta.
+  const centrado = true;
 
   return (
     <View
@@ -44,12 +47,7 @@ export default function TopAppBar({
       )}
 
       <View style={[estilos.textos, centrado && estilos.centrado]}>
-        <Text
-          style={[
-            variante === 'titulo' ? type.headlineMedium : type.titleLarge,
-            estilos.titulo,
-          ]}
-        >
+        <Text style={[type.titleLarge, estilos.titulo]}>
           {titulo}
         </Text>
         {subtitulo && (
@@ -57,24 +55,8 @@ export default function TopAppBar({
         )}
       </View>
 
-      {variante === 'titulo' && (
-        <View
-          style={estilos.acciones}
-          accessibilityElementsHidden
-          importantForAccessibility="no-hide-descendants"
-        >
-          {/* Inertes: buscador y cuenta no entran en las diez pantallas */}
-          <Icon nombre="search" size={24} color={colors.onSurfaceVariant} />
-          <Icon
-            nombre="account_circle"
-            size={24}
-            color={colors.onSurfaceVariant}
-          />
-        </View>
-      )}
-
-      {/* Equilibra el ancho del botón de atrás para que el bloque quede centrado */}
-      {centrado && <View style={estilos.atras} />}
+      {/* Sólo cuando hay flecha: equilibra su ancho para que el centrado sea real */}
+      {conAtras && <View style={estilos.atras} />}
     </View>
   );
 }

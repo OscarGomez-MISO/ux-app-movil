@@ -8,6 +8,8 @@ type ListRowProps = {
   titulo: string;
   ctx?: string;
   icono?: IconName;
+  /** Casilla u otro control a la izquierda. Tiene prioridad sobre `icono`. */
+  delante?: ReactNode;
   /** StatusChip, un chevron, un Button terciario, o nada. */
   trasera?: ReactNode;
   onPress?: () => void;
@@ -26,6 +28,7 @@ export default function ListRow({
   titulo,
   ctx,
   icono,
+  delante,
   trasera,
   onPress,
   compacta,
@@ -46,9 +49,10 @@ export default function ListRow({
         pressed && !inerte && estilos.pulsada,
       ]}
     >
-      {icono && (
-        <Icon nombre={icono} size={24} color={colors.onSurfaceVariant} />
-      )}
+      {delante ??
+        (icono && (
+          <Icon nombre={icono} size={24} color={colors.onSurfaceVariant} />
+        ))}
 
       <View style={estilos.texto}>
         <Text
