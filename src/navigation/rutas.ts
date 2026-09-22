@@ -29,3 +29,9 @@ export type NombrePantalla = keyof typeof rutas;
  */
 export const rutaDe = (nombre: string): Href =>
   (rutas[nombre as NombrePantalla] ?? rutas.M01Inicio) as Href;
+
+/** Ruta tipada con estado efimero para los pasos M02 a M05. */
+export const rutaConParametros = (
+  nombre: NombrePantalla,
+  params: Record<string, string>,
+): Href => ({ pathname: rutas[nombre], params }) as Href;
