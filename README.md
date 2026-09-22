@@ -67,6 +67,52 @@ npm run start:tunnel
 | `npm run web` | Abre la app en el navegador |
 | `npm run typecheck` | Valida los tipos de TypeScript |
 
+## Generacion del paquete Android
+
+Para la entrega se utilizó **EAS Build**, el servicio de compilacion de Expo.
+El perfil `preview` de `eas.json` genera una distribucion interna en formato
+APK, instalable directamente en un telefono Android sin depender de Expo Go.
+
+La vinculacion inicial del repositorio con el proyecto de Expo se realizo con:
+
+```bash
+npx eas-cli@latest login
+npx eas-cli@latest whoami
+npx eas-cli@latest build:configure --platform android
+```
+
+El ultimo comando creo `eas.json` y agrego a `app.json` el identificador del
+proyecto en EAS. La configuracion usada para el paquete instalable es:
+
+```json
+{
+  "build": {
+    "preview": {
+      "distribution": "internal"
+    }
+  }
+}
+```
+
+La compilacion del APK se inicia desde la raiz del repositorio con:
+
+```bash
+npx eas-cli@latest build --platform android --profile preview
+```
+
+Durante la primera compilacion, EAS genera y almacena de forma segura el
+keystore empleado para firmar la aplicacion. Al finalizar, el servicio muestra
+la pagina del build y el enlace de descarga del archivo `.apk`.
+
+El APK descargado se transfiere al telefono y se abre para iniciar la
+instalacion. Android puede solicitar autorizacion para instalar aplicaciones
+desde el navegador o gestor de archivos utilizado. Esta autorizacion se limita
+a esa fuente y puede desactivarse nuevamente despues de instalar el paquete.
+
+El perfil `production` se reserva para una eventual publicacion en Google Play
+y genera normalmente un archivo `.aab`. Para la entrega y prueba directa en un
+dispositivo se usa el APK del perfil `preview`.
+
 ## Estructura del proyecto
 
 ```text
@@ -81,6 +127,7 @@ ux-app-movil/
 |   |-- components/      # Componentes reutilizables
 |   `-- theme/           # Colores, espaciado y estilos compartidos
 |-- app.json             # Configuracion de Expo
+|-- eas.json             # Perfiles de compilacion en EAS Build
 |-- package.json         # Dependencias y scripts
 `-- tsconfig.json        # Configuracion de TypeScript
 ```
