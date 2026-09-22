@@ -36,40 +36,56 @@ export default function ListRow({
   atenuado,
   variante = 'tarjeta',
 }: ListRowProps) {
+  const pulsable = Boolean(onPress) && !inerte;
+
+  const textos = (
+    <>
+      <Text
+        style={[
+          type.titleSmall,
+          { color: atenuado ? colors.onSurfaceVariant : colors.onSurface },
+        ]}
+      >
+        {titulo}
+      </Text>
+      {ctx && <Text style={[type.bodySmall, estilos.ctx]}>{ctx}</Text>}
+    </>
+  );
+
   return (
-    <Pressable
-      onPress={inerte ? undefined : onPress}
-      disabled={inerte || !onPress}
-      accessibilityRole={onPress && !inerte ? 'button' : undefined}
-      style={({ pressed }) => [
+    <View
+      style={[
         estilos.fila,
         variante === 'superficie' && estilos.superficie,
         compacta && estilos.compacta,
         inerte && estilos.inerte,
-        pressed && !inerte && estilos.pulsada,
       ]}
     >
+      {/* La casilla o el botón de la trasera quedan FUERA del pulsable de la
+          fila: un control dentro de otro no es válido y en web produce un
+          <button> anidado. */}
       {delante ??
         (icono && (
           <Icon nombre={icono} size={24} color={colors.onSurfaceVariant} />
         ))}
 
-      <View style={estilos.texto}>
-        <Text
-          style={[
-            type.titleSmall,
-            { color: atenuado ? colors.onSurfaceVariant : colors.onSurface },
+      {pulsable ? (
+        <Pressable
+          onPress={onPress}
+          accessibilityRole="button"
+          style={({ pressed }) => [
+            estilos.texto,
+            pressed && estilos.pulsada,
           ]}
         >
-          {titulo}
-        </Text>
-        {ctx && (
-          <Text style={[type.bodySmall, estilos.ctx]}>{ctx}</Text>
-        )}
-      </View>
+          {textos}
+        </Pressable>
+      ) : (
+        <View style={estilos.texto}>{textos}</View>
+      )}
 
       {trasera}
-    </Pressable>
+    </View>
   );
 }
 
