@@ -11,6 +11,8 @@ type ButtonProps = {
   children: ReactNode;
   onPress?: () => void;
   icono?: IconName;
+  /** Mantiene el texto centrado y fija el icono al inicio del botón. */
+  iconoAlInicio?: boolean;
   /** `completo` para los botones de pie: ancho completo y alto 56. */
   ancho?: 'completo';
   /** Inerte: lleva fuera de las diez pantallas. Se ve, no responde. */
@@ -24,6 +26,7 @@ export default function Button({
   children,
   onPress,
   icono,
+  iconoAlInicio,
   ancho,
   inerte,
   disabled,
@@ -46,8 +49,12 @@ export default function Button({
         pressed && !apagado && estilos.pulsado,
       ]}
     >
-      <View style={estilos.contenido}>
-        {icono && <Icon nombre={icono} size={18} color={colorTexto} />}
+      <View style={[estilos.contenido, iconoAlInicio && estilos.contenidoCompleto]}>
+        {icono && (
+          <View style={iconoAlInicio && estilos.iconoInicio}>
+            <Icon nombre={icono} size={18} color={colorTexto} />
+          </View>
+        )}
         <Text style={[type.labelLarge, { color: colorTexto }]}>{children}</Text>
       </View>
     </Pressable>
@@ -71,6 +78,14 @@ const estilos = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: sp[2],
+  },
+  contenidoCompleto: {
+    width: '100%',
+    justifyContent: 'center',
+  },
+  iconoInicio: {
+    position: 'absolute',
+    left: -6,
   },
   pulsado: {
     transform: [{ scale: 0.98 }],

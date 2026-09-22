@@ -21,3 +21,4 @@ export const ejemplo = {
 
 export const etiquetas = { titulo: 'Título', categoria: 'Categoría', nota: 'Nota' };
 export const botones = { atras: 'Atrás', continuar: 'Continuar' };
+export const iconosCampo = { titulo: 'edit', nota: 'notes' };
