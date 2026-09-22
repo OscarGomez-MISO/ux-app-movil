@@ -12,6 +12,8 @@ type TopAppBarProps = {
   /** Debajo del título, separación 2. */
   subtitulo?: string;
   onBack?: () => void;
+  /** Primer paso del flujo: sin flecha y con los iconos de buscar y cuenta. */
+  sinAtras?: boolean;
 };
 
 /**
@@ -24,9 +26,14 @@ export default function TopAppBar({
   titulo,
   subtitulo,
   onBack,
+  sinAtras,
 }: TopAppBarProps) {
-  const conAtras = variante !== 'titulo';
-  const centrado = variante === 'paso' || variante === 'atras';
+  const conAtras = variante !== 'titulo' && !sinAtras;
+  // Según las maquetas: `titulo` centra y no lleva iconos (M08, M09, M10);
+  // `paso` y `atras` alinean a la izquierda y llevan los dos iconos cuando no
+  // hay flecha (M02). La § 4.2 describe otro reparto; manda la maqueta.
+  const centrado = variante === 'titulo';
+  const conIconos = variante !== 'titulo' && !conAtras;
 
   return (
     <View
@@ -44,12 +51,7 @@ export default function TopAppBar({
       )}
 
       <View style={[estilos.textos, centrado && estilos.centrado]}>
-        <Text
-          style={[
-            variante === 'titulo' ? type.headlineMedium : type.titleLarge,
-            estilos.titulo,
-          ]}
-        >
+        <Text style={[type.titleLarge, estilos.titulo]}>
           {titulo}
         </Text>
         {subtitulo && (
@@ -57,24 +59,17 @@ export default function TopAppBar({
         )}
       </View>
 
-      {variante === 'titulo' && (
+      {conIconos && (
         <View
           style={estilos.acciones}
           accessibilityElementsHidden
           importantForAccessibility="no-hide-descendants"
         >
           {/* Inertes: buscador y cuenta no entran en las diez pantallas */}
-          <Icon nombre="search" size={24} color={colors.onSurfaceVariant} />
-          <Icon
-            nombre="account_circle"
-            size={24}
-            color={colors.onSurfaceVariant}
-          />
+          <Icon nombre="search" size={24} color={colors.onSurface} />
+          <Icon nombre="account_circle" size={24} color={colors.onSurface} />
         </View>
       )}
-
-      {/* Equilibra el ancho del botón de atrás para que el bloque quede centrado */}
-      {centrado && <View style={estilos.atras} />}
     </View>
   );
 }

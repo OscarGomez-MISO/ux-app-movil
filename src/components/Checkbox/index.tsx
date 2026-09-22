@@ -6,17 +6,25 @@ import { colors, radius, sp, type } from '@/src/theme';
 type CheckboxProps = {
   checked: boolean;
   onChange: (checked: boolean) => void;
+  /** Texto visible al lado de la casilla. */
   label?: string;
+  /** Nombre accesible cuando la casilla va sin texto, dentro de una fila. */
+  accessibilityLabel?: string;
 };
 
 /** Casilla · § 4.13. Área tocable de 48 × 48 con hitSlop. */
-export default function Checkbox({ checked, onChange, label }: CheckboxProps) {
+export default function Checkbox({
+  checked,
+  onChange,
+  label,
+  accessibilityLabel,
+}: CheckboxProps) {
   return (
     <Pressable
       onPress={() => onChange(!checked)}
       accessibilityRole="checkbox"
       accessibilityState={{ checked }}
-      accessibilityLabel={label}
+      accessibilityLabel={accessibilityLabel ?? label}
       hitSlop={14}
       style={estilos.area}
     >
