@@ -7,9 +7,9 @@ export const buscar = 'Buscar lugar';
 export const etiquetaMapa = 'Zona sugerida';
 
 export const lugares = [
-  { icono: 'home',         texto: 'Casa · Carrera 15 # 88-21' },
-  { icono: 'work',         texto: 'Trabajo · Calle 72 # 10-34' },
-  { icono: 'add_location', texto: 'Agregar nuevo lugar', inerte: true },
+  { valor: 'Casa',    icono: 'home',         texto: 'Casa · Carrera 15 # 88-21' },
+  { valor: 'Trabajo', icono: 'work',         texto: 'Trabajo · Calle 72 # 10-34' },
+  { valor: '',        icono: 'add_location', texto: 'Agregar nuevo lugar', inerte: true },
 ];
 
 // CM-03. Esta frase va aquí, en la pantalla donde se pide el lugar, no en Ajustes.

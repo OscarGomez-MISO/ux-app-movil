@@ -4,7 +4,12 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 import Icon, { type IconName } from '@/src/components/Icon';
 import { colors, frame, radius, sp, type } from '@/src/theme';
 
-export type ButtonTipo = 'primario' | 'secundario' | 'terciario' | 'destructivo';
+export type ButtonTipo =
+  | 'primario'
+  | 'tonal'
+  | 'secundario'
+  | 'terciario'
+  | 'destructivo';
 
 type ButtonProps = {
   tipo: ButtonTipo;
@@ -100,6 +105,10 @@ const tono: Record<ButtonTipo, { caja: object; texto: string }> = {
   primario: {
     caja: { backgroundColor: colors.primary },
     texto: colors.onPrimary,
+  },
+  tonal: {
+    caja: { backgroundColor: colors.secondaryContainer },
+    texto: colors.onSecondaryContainer,
   },
   secundario: {
     caja: { borderWidth: 1, borderColor: colors.outline },
